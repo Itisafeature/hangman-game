@@ -1,29 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import ArtistSearch from './ArtistSearch';
 import Letter from './Letter';
 
 const GameContainer = () => {
-  const [word, setWord] = useState('');
+  const [artist, setArtist] = useState('')
+  const [submittedArtist, setSubmittedArtist] = useState(false);
+  const [track, setTrack] = useState('');
 
-  const URL = 'https://api.themoviedb.org'
+  const URL = 'http://localhost:3001'
 
-  useEffect(() => {
-    const getWord = async () => {
-      try {
-        // const latestId = await axios.get(`${URL}/movie/latest`)
-        // debugger;
-        setWord('Hello World');
-      } catch(err) {
-      }
+  const handleChange = (e) => {
+    setArtist(e.target.value)
+  }
 
+  const getSong = async () => {
+    const song = await axios.get(`${URL}?q=${artist}`)
+    if (song) {
+      setSubmittedArtist(true);
+      setTrack(song);
     }
-
-    getWord();
-  }, [])
+  }
 
   return(
     <div>
-      {word.split('').map(char => <Letter letter={char} />)}
+      {submittedArtist ? null : <ArtistSearch artist={artist} setArtist={setArtist} getSong={getSong} handleChange={handleChange}/>}
+      {track.split('').map(char => <Letter letter={char} />)}
     </div>
   )
 }
