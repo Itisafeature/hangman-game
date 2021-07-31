@@ -1,7 +1,6 @@
 import React from 'react';
 
 const Letter = ({letter, isGuessed}) => {
-  console.log(letter + " " + isGuessed)
   return(
     <div>
       {isGuessed ? letter : '_'}
