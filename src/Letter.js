@@ -1,9 +1,10 @@
 import React from 'react';
 
-const Letter = ({letter}) => {
+const Letter = ({letter, isGuessed}) => {
+  console.log(letter + " " + isGuessed)
   return(
     <div>
-      {letter}
+      {isGuessed ? letter : '_'}
     </div>
   )
 }

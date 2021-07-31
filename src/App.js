@@ -13,7 +13,6 @@ const App = () => {
     setLoggedIn(true);
   }
 
-
   return (
     <div className="App">
       { !loggedIn ? <UserLogin loginUser={loginUser} /> : null }
