@@ -1,14 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Letter from './Letter';
 
-const Game = ({ album, trackChars }) => {
+const Game = ({ album, trackChars, setIsWon, history }) => {
   const inputEl = useRef(null);
   const [guesses, setGuesses] = useState([]);
-  const [isWon, setIsWon] = useState(false);
 
   useEffect(() => {
-    console.log(trackChars);
-    if (trackChars.length > 0) setIsWon(trackChars.every(checkIfGuessed));
+    if (trackChars.length > 0) {
+      const checkWin = trackChars.every(checkIfGuessed)
+      if (checkWin) {
+        setIsWon(checkWin);
+        history.push("/congratulations");
+      }
+
+    }
   }, [guesses])
 
   const handleGuess = (e) => {
@@ -19,6 +24,7 @@ const Game = ({ album, trackChars }) => {
   const checkIfGuessed = (char) => {
     return guesses.includes(char.toLowerCase());
   };
+
   return(
     <>
       <h1>Album: {album}</h1>
