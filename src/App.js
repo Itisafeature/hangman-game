@@ -19,11 +19,11 @@ const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isWon, setIsWon] = useState(false);
 
-  const URL = 'http://localhost:3001/get-song'
+  const URL = 'http://localhost:3001'
 
 
   const getSong = async () => {
-    const song = await axios.get(`${URL}/${artist}`)
+    const song = await axios.get(`${URL}/get-song/${artist}`)
     if (song) {
       setSubmittedArtist(true);
       setTrack(song.data.name);
@@ -34,10 +34,16 @@ const App = () => {
     }
   }
 
-  const loginUser = (username) => {
-    setUser(username);
-    setLoggedIn(true);
-    history.push("/select-artist");
+  const loginUser = async (username) => {
+    try {
+      const res = await axios.post(`${URL}/login`, {username: username})
+      debugger;
+      setUser(res.data.user);
+      setLoggedIn(true);
+      history.push("/select-artist");
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   const handleChange = (e) => {
